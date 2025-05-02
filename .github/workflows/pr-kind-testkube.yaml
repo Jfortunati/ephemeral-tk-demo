@@ -41,7 +41,7 @@ jobs:
       env:
         TESTKUBE_TOKEN: ${{ secrets.TESTKUBE_TOKEN }}
       run: |
-        curl --max-time 30 -sSLf https://get.testkube.io | sh 
+        curl -sSLf https://get.testkube.io | sh 
         testkube set context --org-id tkcorg_0f382d90e81ea228 --env-id tkcenv_943fe797cb48b4d2 -c cloud  -k TESTKUBE_TOKEN
         testkube create runner github-action-runner --create --floating
 
