@@ -30,16 +30,13 @@ jobs:
     # 3 – Install Helm & kubectl are already present ------------------------
     - uses: azure/setup-helm@v4           # tiny fast action
 
-    # 4 – Add Testkube chart repo -------------------------------------------
-    - name: Add Testkube repo
-      run: |
-        helm repo add kubeshop https://kubeshop.github.io/helm-charts
-        helm repo update
-
-    # 5 – Install a standalone Agent ---------------------------------------
-    - name: Install Testkube Agent
-      env:
-        TESTKUBE_TOKEN: ${{ secrets.TESTKUBE_TOKEN }}
+    # 4 – Install a standalone Agent ---------------------------------------    
+    - name: Setup Testkube CLI
+      uses: kubeshop/setup-testkube@v1
+      with:
+        organization: tkcorg_0f382d90e81ea228
+        environment: tkcenv_943fe797cb48b4d2
+        token: ${{ secrets.TESTKUBE_TOKEN }}
       run: |
         curl -sSLf https://get.testkube.io | sh 
         testkube set context --org-id tkcorg_0f382d90e81ea228 --env-id tkcenv_943fe797cb48b4d2 -c cloud  -k TESTKUBE_TOKEN
