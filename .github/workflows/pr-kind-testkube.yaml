@@ -37,6 +37,9 @@ jobs:
         organization: tkcorg_0f382d90e81ea228
         environment: tkcenv_943fe797cb48b4d2
         token: ${{ secrets.TESTKUBE_TOKEN }}
+
+    # 5 - Creating a floating runner within the KinD cluster
+    - name: Provision floating runner
       run: |
         testkube create runner github-action-runner --create --floating
 
