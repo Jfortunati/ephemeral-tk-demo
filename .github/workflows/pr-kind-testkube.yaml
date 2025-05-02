@@ -38,8 +38,6 @@ jobs:
         environment: tkcenv_943fe797cb48b4d2
         token: ${{ secrets.TESTKUBE_TOKEN }}
       run: |
-        curl -sSLf https://get.testkube.io | sh 
-        testkube set context --org-id tkcorg_0f382d90e81ea228 --env-id tkcenv_943fe797cb48b4d2 -c cloud  -k TESTKUBE_TOKEN
         testkube create runner github-action-runner --create --floating
 
     # 6 – Wait for the agent to be ready (simplest check) -------------------
