@@ -41,12 +41,12 @@ jobs:
     # 5 - Creating a floating runner within the KinD cluster
     - name: Provision floating runner
       run: |
-        testkube install runner github-action-runner --create --floating --env paris
+        testkube install runner github-action-runner --create --floating --env paris --namespace testkube
 
     # 6 – Wait for the agent to be ready (simplest check) -------------------
-#    - name: Wait for Agent
-#      run: |
-#        kubectl -n testkube rollout status deploy/testkube-agent --timeout=120s
+    - name: Wait for Agent
+      run: |
+        kubectl -n testkube rollout status deploy/testkube-agent --timeout=120s
 
 #    # 7 – Register / trigger your Testkube workflows ------------------------
 #    - name: Kick off Testkube workflows
