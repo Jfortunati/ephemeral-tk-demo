@@ -46,7 +46,7 @@ jobs:
 #    # 7 – Register / trigger your Testkube workflows ------------------------
     - name: Kick off Testkube workflows
       run: |
-         testkube run testworkflow selenium-multiple-browser-parallel-test \
+         testkube run testworkflow pytest-junit \
          -f \
          --target name=github-action-runner-${{ github.run_id }}
          
