@@ -41,7 +41,7 @@ jobs:
     # 5 - Creating a floating runner within the KinD cluster
     - name: Provision floating runner
       run: |
-        testkube install runner github-action-runner --create --floating --env-id paris
+        testkube install runner github-action-runner --create --floating --env paris
 
     # 6 – Wait for the agent to be ready (simplest check) -------------------
 #    - name: Wait for Agent
