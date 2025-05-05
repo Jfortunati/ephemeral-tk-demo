@@ -38,15 +38,6 @@ jobs:
         environment: tkcenv_943fe797cb48b4d2
         token: ${{ secrets.TESTKUBE_TOKEN }}
 
-    # 4.5 - Set context for the CLI -----------------------------------------
-    - name: Set Testkube context
-      run: |
-        testkube set context \
-          --org-id  tkcorg_0f382d90e81ea228 \
-          --env-id  tkcenv_943fe797cb48b4d2 \
-          -c cloud \
-          -k       ${{ secrets.TESTKUBE_TOKEN }}
-
     # 5 - Creating a floating runner within the KinD cluster
     - name: Provision floating runner
       run: |
