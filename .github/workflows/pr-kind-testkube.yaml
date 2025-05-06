@@ -41,24 +41,17 @@ jobs:
     # 5 - Creating a floating runner within the KinD cluster
     - name: Provision floating runner
       run: |
-        testkube install runner github-action-runner-${{ github.run_id }} --create --floating --env paris --namespace testkube
+        testkube install runner github-action-runner-${{ github.run_id }} --env paris --namespace testkube
 
-#    # 7 – Register / trigger your Testkube workflows ------------------------
+    # 6 – Register / trigger your Testkube workflows ------------------------
     - name: Kick off Testkube workflows
       run: |
          testkube run testworkflow pytest-junit \
          -f \
-         --target name=github-action-runner-${{ github.run_id }}
+         --target name=github-action-runner-${{ github.run_id }} \
+         --tag pull-request=PR-${{ github.run_id }}
          
-
-#    # 8 – Retrieve results (optional) ---------------------------------------
-#    - name: Get results
-#      run: |
-#        kubectl get testworkflows -A
-#        kubectl logs -n testkube deployment/testkube-agent
-
-    # 9 – Cluster auto‑deletes with the runner VM ---------------------------
-    # No explicit cleanup is required, but you can add:
-    # - name: Dump logs on failure
-    #   if: failure()
-    #   run: kind export logs /tmp/artifacts && tar -czf logs.tgz /tmp/artifacts
+    # 7 – Register / trigger your Testkube workflows ------------------------
+    - name: Kick off Testkube workflows
+      run: |         
+          testkube delete runner github-action-runner-${{ github.run_id }}
