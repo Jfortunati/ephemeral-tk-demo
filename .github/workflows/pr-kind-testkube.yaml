@@ -52,8 +52,8 @@ jobs:
          --tag pull-request=PR-${{ github.run_id }}
          
     # 7 – Cleanup and remove ephemeral runner in Testkube ---------------------
-    - name: Delete ephemeral runner
-      run: |         
-          testkube delete runner github-action-runner-${{ github.run_id }} \
-          --delete \
-          --uninstall
+#    - name: Delete ephemeral runner
+#      run: |         
+#          testkube delete runner github-action-runner-${{ github.run_id }} \
+#          --delete \
+#          --uninstall
