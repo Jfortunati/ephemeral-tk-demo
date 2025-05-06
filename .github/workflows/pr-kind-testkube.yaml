@@ -56,4 +56,4 @@ jobs:
 #      run: |         
 #          testkube delete runner github-action-runner-${{ github.run_id }} \
 #          --delete \
-#          --uninstall
+#          --no-uninstall
