@@ -41,7 +41,7 @@ jobs:
     # 5 - Creating a floating runner within the KinD cluster
     - name: Provision floating runner
       run: |
-        testkube install runner github-action-runner-${{ github.run_id }} --env paris --namespace testkube
+        testkube install runner github-action-runner-${{ github.run_id }} --create --env paris --namespace testkube
 
     # 6 – Register / trigger your Testkube workflows ------------------------
     - name: Kick off Testkube workflows
