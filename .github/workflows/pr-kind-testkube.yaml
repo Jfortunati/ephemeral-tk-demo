@@ -6,7 +6,7 @@ permissions:
   contents: read          # needed by checkout
   id-token: write         # for ghcr if you push images
 jobs:
-  e2e:
+  ephemeral-agent-test:
     runs-on: ubuntu-latest       # free‑tier hosted runner
     timeout-minutes: 25          # protect your 2 000 free minutes
     steps:
