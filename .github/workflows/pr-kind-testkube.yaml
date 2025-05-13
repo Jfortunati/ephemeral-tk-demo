@@ -53,9 +53,9 @@ jobs:
 
     # 7 - upload artifacts to github action...? ------------------------------
     - name: Upload artifacts from workflow execution
-      uses: actions/upload-test-report@v2
+      uses: actions/upload-artifact@v4
       with:
-        path: artifacts/*.xml   :contentReference[oaicite:2]{index=2}
+        path: artifacts/*.xml
          
     # 7 – Cleanup and remove ephemeral runner in Testkube ---------------------
 #    - name: Delete ephemeral runner
