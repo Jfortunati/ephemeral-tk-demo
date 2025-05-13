@@ -46,10 +46,12 @@ jobs:
     # 6 – Register / trigger your Testkube workflows -------------------------
     - name: Kick off Testkube workflows
       run: |
+         mkdir -p /data/artifacts/
          testkube run testworkflow pytest-junit \
          -f \
          --target name=github-action-runner-${{ github.run_id }} \
          --tag pull-request=PR-${{ github.run_id }}
+         --download-artifacts /data/artifacts/
 
     # 7 - upload artifacts to github action...? ------------------------------
     - name: Upload artifacts from workflow execution
