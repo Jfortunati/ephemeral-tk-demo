@@ -50,6 +50,12 @@ jobs:
          -f \
          --target name=github-action-runner-${{ github.run_id }} \
          --tag pull-request=PR-${{ github.run_id }}
+
+    # 7 - upload artifacts to github action...? ------------------------------
+    - name: Upload artifacts from workflow execution
+      uses: actions/upload-test-report@v2
+      with:
+        path: artifacts/*.xml   :contentReference[oaicite:2]{index=2}
          
     # 7 – Cleanup and remove ephemeral runner in Testkube ---------------------
 #    - name: Delete ephemeral runner
