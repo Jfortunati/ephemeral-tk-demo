@@ -58,7 +58,7 @@ jobs:
           set -o pipefail
           {
             testkube version || true
-            testkube install runner "$RUNNER_NAME" --create --floating --namespace testkube
+            testkube install runner "$RUNNER_NAME" --create --floating --env default --namespace testkube
             kubectl -n testkube wait --for=condition=available deployment --all --timeout=180s
             testkube get runners
           } 2>&1 | tee -a "$RUNNER_TEMP/tk.log"
