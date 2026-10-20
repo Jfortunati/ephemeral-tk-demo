@@ -82,6 +82,6 @@ jobs:
       - name: Remove runner record
         if: always()
         run: |
-          out=$(testkube delete runner "$TK_RUNNER" --delete 2>&1 </dev/null) && rc=0 || rc=$?
+          out=$(testkube delete runner "$TK_RUNNER" --delete --uninstall 2>&1 </dev/null) && rc=0 || rc=$?
           msg=$(echo "$out" | sed 's/\x1b\[[0-9;]*m//g' | tail -n 15 | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
           if [ $rc -ne 0 ]; then echo "::warning title=Runner cleanup failed (rc=$rc)::$msg"; else echo "::notice title=Runner cleanup::$msg"; fi
