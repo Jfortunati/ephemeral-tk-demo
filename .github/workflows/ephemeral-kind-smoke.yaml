@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      RUNNER_NAME: gha-${{ github.run_id }}-${{ github.run_attempt }}
+      TK_RUNNER: gha-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
 
@@ -58,7 +58,7 @@ jobs:
           set -o pipefail
           {
             testkube version || true
-            testkube install runner "$RUNNER_NAME" --create --floating --env default --namespace testkube
+            testkube install runner "$TK_RUNNER" --create --floating --env default --namespace testkube
             kubectl -n testkube wait --for=condition=available deployment --all --timeout=180s
             testkube get runners
           } 2>&1 | tee -a "$RUNNER_TEMP/tk.log"
@@ -66,7 +66,7 @@ jobs:
       - name: Run TestWorkflow on the ephemeral runner
         run: |
           testkube run testworkflow "$TK_WORKFLOW" \
-            --target name="$RUNNER_NAME" \
+            --target name="$TK_RUNNER" \
             --tag ci-run=${{ github.run_id }} \
             --tag source=github-actions \
             -f 2>&1 | tee -a "$RUNNER_TEMP/tk.log"
@@ -81,4 +81,4 @@ jobs:
 
       - name: Remove runner record
         if: always()
-        run: testkube delete runner "$RUNNER_NAME" --delete || true
+        run: testkube delete runner "$TK_RUNNER" --delete || true
