@@ -55,9 +55,13 @@ jobs:
 
       - name: Install ephemeral runner
         run: |
-          testkube install runner "$RUNNER_NAME" --create --floating --namespace testkube
-          kubectl -n testkube wait --for=condition=available deployment --all --timeout=180s
-          testkube get runners
+          set -o pipefail
+          {
+            testkube version || true
+            testkube install runner "$RUNNER_NAME" --create --floating --namespace testkube
+            kubectl -n testkube wait --for=condition=available deployment --all --timeout=180s
+            testkube get runners
+          } 2>&1 | tee -a "$RUNNER_TEMP/tk.log"
 
       - name: Run TestWorkflow on the ephemeral runner
         run: |
@@ -65,7 +69,15 @@ jobs:
             --target name="$RUNNER_NAME" \
             --tag ci-run=${{ github.run_id }} \
             --tag source=github-actions \
-            -f
+            -f 2>&1 | tee -a "$RUNNER_TEMP/tk.log"
+        shell: bash -o pipefail {0}
+
+      - name: Surface failure output as annotations
+        if: failure()
+        run: |
+          [ -f "$RUNNER_TEMP/tk.log" ] || { echo "::error title=No Testkube log::Failed before the runner step (kind, app deploy, or CLI setup)"; exit 0; }
+          msg=$(tail -n 40 "$RUNNER_TEMP/tk.log" | sed 's/\x1b\[[0-9;]*m//g' | sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g')
+          echo "::error title=Testkube step output (last 40 lines)::$msg"
 
       - name: Remove runner record
         if: always()
